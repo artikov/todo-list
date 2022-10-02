@@ -1,10 +1,11 @@
-//jshint esversion:6
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 const app = express();
 
@@ -15,10 +16,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-// const items = ["Buy Food", "Cook Food", "Eat Food"];
-// const workItems = [];
+MONGODB_URL = process.env.MONGODB_URL
 
-mongoose.connect("mongodb+srv://artikov:Oybekmongo012@cluster0.wpdgb.mongodb.net/todolistDB")
+// CONNECT TO MONGO DB 
+mongoose.connect(MONGODB_URL)
 
 const itemsSchema = new mongoose.Schema({
   name: String
@@ -49,8 +50,6 @@ const listSchema = {
 const List = mongoose.model('list', listSchema)
 
 app.get("/", function(req, res) {
-
-  // const day = date.getDate();
 
   Item.find({}, function(err, foundItems) {
     if (foundItems.length === 0) {
@@ -120,15 +119,6 @@ app.post("/", function(req, res) {
       res.redirect("/" + listName)
     })
   }
-
-
-  // if (req.body.list === "Work") {
-  //   workItems.push(item);
-  //   res.redirect("/work");
-  // } else {
-  //   items.push(item);
-  //   res.redirect("/");
-  // }
 });
 
 app.post("/delete", function(req, res) {
@@ -159,14 +149,6 @@ app.post("/delete", function(req, res) {
 
 })
 
-
-// app.get("/work", function(req, res) {
-//   res.render("list", {
-//     listTitle: "Work List",
-//     newListItems: workItems
-//   });
-// });
-
 app.get("/about", function(req, res) {
   res.render("about");
 });
@@ -178,5 +160,5 @@ if(port == null || port ==""){
 
 
 app.listen(port, function() {
-  console.log("Server started succesfully");
+  console.log("Server started succesfully on port 3000");
 });

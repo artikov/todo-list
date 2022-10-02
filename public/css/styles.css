@@ -66,6 +66,7 @@ button {
   font-size: 30px;
   padding-bottom: 6px;
   border-width: 0;
+  cursor: pointer;
 }
 
 input[type="text"] {
@@ -93,4 +94,13 @@ footer {
   color: white;
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
+}
+
+.github-icon{
+  padding:10px;
+  font-size: 50px;
+}
+
+.github-icon:hover {
+  color: #00204a;
 }
